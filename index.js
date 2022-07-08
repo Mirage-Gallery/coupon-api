@@ -5,6 +5,11 @@ const port = process.env.PORT || 3000;
 
 const Coupon = require('./model.js')
 
+// catch all route
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
 app.get('/coupon/:address', (req, res) => {
     const userAddress = req.params.address;
     Coupon.findOne({address: userAddress}, function(err, coupon) {
