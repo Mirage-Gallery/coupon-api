@@ -1,0 +1,30 @@
+name: Deploy main
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.4.2
+      with:
+        submodules: 'recursive'
+        ref: 'main'
+        token: ${{ secrets.DEPLOY_TOKEN }}
+
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*'
+
+    - name: Deploy to EB
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        application_name: mg-coupon-api
+        environment_name: mg-coupon-api-env
+        version_label: 0000000
+        region: us-west-2
+        deployment_package: deploy.zip
