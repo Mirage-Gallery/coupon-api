@@ -10,10 +10,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2.4.2
-      with:
-        submodules: 'recursive'
-        ref: 'main'
-        token: ${{ secrets.DEPLOY_TOKEN }}
 
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
@@ -25,6 +21,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: mg-coupon-api
         environment_name: mg-coupon-api-env
-        version_label: 0000004
+        version_label: 0000005
         region: us-west-2
         deployment_package: deploy.zip

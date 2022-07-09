@@ -1,6 +1,9 @@
 {
   "name": "dreamers_api",
   "version": "1.0.0",
+  "scripts": {
+    "start": "node index.js"
+  },
   "main": "index.js",
   "repository": "https://github.com/luquitared/dreamers_api.git",
   "author": "Lucas Negritto <lucas.negritto@gmail.com>",
