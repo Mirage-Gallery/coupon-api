@@ -5,18 +5,27 @@ const port = process.env.PORT || 3000;
 
 const Coupon = require('./model.js')
 
-// catch all route
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
 app.get('/coupon/:address', (req, res) => {
-    const userAddress = req.params.address;
-    Coupon.findOne({address: userAddress}, function(err, coupon) {
-      if (err) throw err;
+  const userAddress = req.params.address;
+  Coupon.findOne({ address: userAddress }, function (err, coupon) {
+    if (err) console.log(err)
+    if (coupon === null) {
+      res.send({ error: 'No coupon found for this address' })
+    }
+    else {
       res.send(coupon);
-    });
+    }
   });
+});
+
+// catch all 404
+app.use((req, res, next) => {
+  res.status(404).send('404: Page not found')
+})
 
 app.listen(port, () => {
   console.log(`app listening at http://localhost:${port}`)
