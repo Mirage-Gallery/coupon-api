@@ -6,12 +6,14 @@ const { ethers } = require('ethers');
 
 require('dotenv').config();
 
-let presaleAddresses = ['0x111C2825e5f29E8748f32b699a486021eCa16765'];
+let presaleAddresses = ['0x111C2825e5f29E8748f32b699a486021eCa16765', '0x879138894E25984E5a33BD3d64D9dDA90DEFC723'];
 const pvtKeyString = process.env.PRIVATE_KEY;
 const signerPvtKey = Buffer.from(pvtKeyString, "hex");
 const signerAddress = ethers.utils.getAddress(privateToAddress(signerPvtKey).toString("hex"));
 
 async function createCoupons() {
+
+    let coupons = []
 
     for (let i = 0; i < presaleAddresses.length; i++) {
         const userAddress = ethers.utils.getAddress(presaleAddresses[i]);
@@ -21,13 +23,16 @@ async function createCoupons() {
         );
         let tempCoupon = createCoupon(hashBuffer, signerPvtKey);
         tempCoupon = serializeCoupon(tempCoupon)
-        tempCoupon.address = userAddress;
+        tempCoupon.address = userAddress.toLowerCase()
 
         let CouponDB = new Coupon(tempCoupon);
-        console.log(CouponDB);
+        coupons.push(CouponDB);
+        console.log('created coupon: ', CouponDB);
+    }
 
-        // save to mongodb
-        await CouponDB.save();
+    // for all coupons in the array, save them to the database
+    for (let i = 0; i < coupons.length; i++) {
+        await coupons[i].save();
     }
 }
 
