@@ -3,7 +3,19 @@ const app = express()
 require('dotenv').config();
 const port = process.env.PORT || 3000;
 const cors = require('cors')
-const logger = require('./logger')
+const morgan = require('morgan')
+const fs = require('fs')
+const path = require('path')
+
+// log only 4xx and 5xx responses to console
+app.use(morgan('dev', {
+  skip: function (req, res) { return res.statusCode < 400 }
+}))
+
+// log all requests to access.log
+app.use(morgan('common', {
+  stream: fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+}))
 
 app.use(cors())
 
@@ -14,7 +26,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/log', (req, res) => {
-  res.sendFile(__dirname + '/combined.log')
+  res.sendFile(__dirname + '/access.log')
 })
 
 app.get('/coupon/:address', (req, res) => {
@@ -40,9 +52,6 @@ app.get('/loaderio-5c062010c267d966c18fdb3c4a118112', (req, res) => {
 
 // catch all 404
 app.use((req, res, next) => {
-  // log URL
-  logger.info(`${req.method} ${req.url}`)
-  logger.info(res.statusCode)
   res.status(404).send('404: Page not found')
 })
 
