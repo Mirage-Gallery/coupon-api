@@ -30,9 +30,6 @@ app.get('/log', (req, res) => {
 })
 
 app.get('/coupon/:address', (req, res) => {
-  // log URL
-  logger.info(`GET /coupon/${req.params.address}`)
-  logger.info(res.statusCode)
   const userAddress = req.params.address;
   Coupon.findOne({ address: userAddress }, function (err, coupon) {
     if (err) console.log(err)
