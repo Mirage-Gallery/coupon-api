@@ -13,6 +13,8 @@ app.get('/', (req, res) => {
 })
 
 app.get('/coupon/:address', (req, res) => {
+  console.log(res.statusCode)
+
   const userAddress = req.params.address;
   Coupon.findOne({ address: userAddress }, function (err, coupon) {
     if (err) console.log(err)
