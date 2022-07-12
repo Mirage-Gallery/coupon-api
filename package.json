@@ -14,6 +14,7 @@
     "ethereumjs-utils": "^5.2.5",
     "ethers": "^5.6.6",
     "express": "^4.18.1",
-    "mongoose": "^6.3.4"
+    "mongoose": "^6.3.4",
+    "winston": "^3.8.1"
   }
 }
