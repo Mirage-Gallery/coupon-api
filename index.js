@@ -25,6 +25,11 @@ app.get('/coupon/:address', (req, res) => {
   });
 });
 
+// route for sending a .txt file at path ./coupon.txt
+app.get('/loaderio-5c062010c267d966c18fdb3c4a118112', (req, res) => {
+  res.sendFile(__dirname + '/stress.txt');
+})
+
 // catch all 404
 app.use((req, res, next) => {
   res.status(404).send('404: Page not found')
