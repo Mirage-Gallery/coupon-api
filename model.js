@@ -9,6 +9,7 @@ const couponSchema = new mongoose.Schema({
   s: String,
   v: Number,
   address: String,
+  type: String
 }, {
   collection: 'coupons'
 });
