@@ -27,7 +27,7 @@ async function createCoupons() {
         tempCoupon = serializeCoupon(tempCoupon)
         tempCoupon.address = userAddress.toLowerCase()
         
-        tempCoupon.type = 'braindrops'
+        tempCoupon.type = couponType
 
         let CouponDB = new Coupon(tempCoupon);
         coupons.push(CouponDB);

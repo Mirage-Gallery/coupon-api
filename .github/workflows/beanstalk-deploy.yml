@@ -21,6 +21,6 @@ jobs:
         aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         application_name: mg-coupon-api
         environment_name: mg-coupon-api-env
-        version_label: 0000014
+        version_label: 0000015
         region: us-west-2
         deployment_package: deploy.zip
