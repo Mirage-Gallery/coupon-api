@@ -55,10 +55,10 @@ app.get('/coupon/standard/:address', (req, res) => {
   });
 });
 
-app.get('/coupon/braindrops/:address', (req, res) => {
+app.get('/coupon/secondary/:address', (req, res) => {
   const userAddress = req.params.address;
   // find one coupon that has the address and braindrops is true
-  Coupon.findOne({ address: userAddress, type: 'braindrops' }, function (err, coupon) {
+  Coupon.findOne({ address: userAddress, type: 'secondary' }, function (err, coupon) {
     if (err) console.log(err)
     if (coupon === null) {
       res.send({ error: 'No coupon found for this address' })
