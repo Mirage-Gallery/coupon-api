@@ -6,10 +6,12 @@ const { ethers } = require('ethers');
 
 require('dotenv').config();
 
-let presaleAddresses = ['0x111C2825e5f29E8748f32b699a486021eCa16765', '0x879138894E25984E5a33BD3d64D9dDA90DEFC723'];
+let presaleAddresses = ['0x99cfd045a577b2e256979c322e4f56735db09d9c'];
 const pvtKeyString = process.env.PRIVATE_KEY;
 const signerPvtKey = Buffer.from(pvtKeyString, "hex");
 const signerAddress = ethers.utils.getAddress(privateToAddress(signerPvtKey).toString("hex"));
+
+const couponType = 'standard'
 
 async function createCoupons() {
 
@@ -18,8 +20,8 @@ async function createCoupons() {
     for (let i = 0; i < presaleAddresses.length; i++) {
         const userAddress = ethers.utils.getAddress(presaleAddresses[i]);
         const hashBuffer = generateHashBuffer(
-            ["address"],
-            [userAddress]
+            ["address","string"],
+            [userAddress,couponType]
         );
         let tempCoupon = createCoupon(hashBuffer, signerPvtKey);
         tempCoupon = serializeCoupon(tempCoupon)
@@ -63,3 +65,5 @@ function serializeCoupon(coupon) {
         v: coupon.v,
     };
 }
+
+console.log("Signer Address:",signerAddress)
